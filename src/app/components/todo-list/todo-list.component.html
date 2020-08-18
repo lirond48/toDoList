@@ -1,0 +1,43 @@
+<!-- <p>todo-list works!</p> -->
+<div class=" container text-center">
+    <div class="p-2  ">
+        <input type="text" placeholder="what is your task?" [(ngModel)]="todoTitle">
+        <button class="btn btn-info m-3" (click)="addTodo()">ADD!</button>
+        <div class="float-left ">
+            <p>Sort By</p>
+            <button class="m-2" (click)="sortByName()">TITLE</button>
+            <button (click)="sortById()">id</button>
+        </div>
+
+    </div>
+
+    <div class="todo-all">
+        <div class=" container col-lg-10 " *ngFor="let todo of todos" @fade>
+
+            <div [ngClass]="{ 'compiled' : todo.completed}" class=" row p-2 border justify-content-between">
+                <input type="checkbox" [(ngModel)]="todo.completed">
+
+
+                <div class="ml-3 font-weight-bold">{{todo.title}}</div>
+                <div class="ml-3 font-weight-bold">{{todo.date| date:'dd/MM/yyyy'}}</div>
+                <form name="myForm">
+                    <label for="singleSelect"> Priority of the task: </label><br>
+                    <select name="singleSelect" ng-model="data.singleSelect">
+                        <option value="option-1">Top priority</option>
+                        <option value="option-2">Medium priority</option>
+                        <option value="option-2">Last priority</option>
+                    </select>
+                </form>
+                <button *ngIf="!todo.editing; else editingTodo" class="btn btn-warning float-right"
+                    (click)="editTodo(todo) ">Edit</button>
+                <ng-template #editingTodo>
+                    <input type="text" class="float-right" [(ngModel)]="todo.title">
+                    <button class="btn btn-warning float-right" (click)="doneEdit(todo) ">Edit</button>
+
+                </ng-template>
+                <button class="btn btn-dark float-right" (click)="deleteItem(todo.id)">X</button>
+
+            </div>
+        </div>
+    </div>
+</div>
